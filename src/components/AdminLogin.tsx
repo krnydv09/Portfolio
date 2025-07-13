@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 const AdminLoginPanel: React.FC = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [password, setPassword] = useState("");
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
             <div className="bg-white p-8 rounded-lg shadow-lg max-w-md md:w-[320px]">
@@ -8,8 +11,25 @@ const AdminLoginPanel: React.FC = () => {
                 <form className="space-y-4" method="POST" action="/login">
                     <input type="text" name="username" placeholder="Username" required
                         className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
-                    <input type="password" name="password" placeholder="Password" required
-                        className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                    <div className="relative">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="Password"
+                            required
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 pr-10"
+                        />
+                        <button
+                            type="button"
+                            tabIndex={-1}
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
+                        >
+                            {showPassword ? "Hide" : "Show"}
+                        </button>
+                    </div>
                     <button type="submit"
                         className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600">
                         Login
