@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Globals } from "@/app/GlobalsProvider";
 import type { GlobalContextType } from "@/app/GlobalsProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserAstronaut, faX, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faUserAstronaut, faX, faSignOutAlt, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import gsap from "gsap";
 import { useNotification } from "@/components/Notification";
 
@@ -20,6 +20,8 @@ const LoginPanel: React.FC = () => {
     const { loggedIn, setLoggedIn, showPanel, setShowPanel } = useContext<GlobalContextType>(Globals);
     const { showNotification } = useNotification();
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [password, setPassword] = useState("");
 
     // Refs for animation
     const panelRef = useRef<HTMLDivElement | null>(null);
@@ -133,7 +135,7 @@ const LoginPanel: React.FC = () => {
                 >
                     <div
                         ref={formDivRef}
-                        className="overflow-hidden min-h-[200px] min-w-[350px] bg-white p-8 rounded-xl border-1 border-gray-200 shadow-2xl flex flex-col justify-center items-center transition-opacity duration-500 opacity-100 relative"
+                        className="overflow-hidden mx-4 w-80 h-80 rounded-2xl bg-white p-6 border-1 border-gray-200 shadow-2xl flex flex-col justify-center items-center transition-opacity duration-500 opacity-100 relative"
                         onClick={e => { e.stopPropagation(); }}
                     >
                         <button
@@ -147,7 +149,26 @@ const LoginPanel: React.FC = () => {
                         <h2 className="mb-4 text-2xl font-semibold">Admin Login</h2>
                         <form ref={formRef} onSubmit={handleLogin} className="w-full flex flex-col gap-4">
                             <input name="username" type="text" placeholder="Username" className="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
-                            <input name="password" type="password" placeholder="Password" className="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+                            <div className="relative">
+                                <input
+                                    name="password"
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Password"
+                                    className="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 pr-10 w-full"
+                                    required
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                />
+                                <button
+                                    type="button"
+                                    tabIndex={-1}
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
+                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                >
+                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="h-5 w-5" />
+                                </button>
+                            </div>
                             <button type="submit" className="px-6 py-2 rounded-lg border-none bg-indigo-600 text-white font-bold cursor-pointer transition-colors duration-300 hover:bg-indigo-700">Login</button>
                         </form>
                     </div>
