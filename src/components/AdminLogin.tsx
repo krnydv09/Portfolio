@@ -6,7 +6,7 @@ const AdminLoginPanel: React.FC = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-            <div className="bg-white p-8 rounded-lg shadow-lg max-w-md md:w-[320px]">
+            <div className="bg-white p-6 mx-4 w-80 h-80 rounded-2xl shadow-lg flex flex-col justify-center md:p-8 md:mx-0 md:w-[320px] md:h-auto">
                 <h2 className="text-2xl font-bold text-center mb-4">Admin Login</h2>
                 <form className="space-y-4" method="POST" action="/login">
                     <input type="text" name="username" placeholder="Username" required
